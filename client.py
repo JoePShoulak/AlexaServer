@@ -3,7 +3,8 @@ import socket
 
 
 def client_program():
-    host = socket.gethostname()  # as both code is running on same pc
+    # host = socket.gethostname()  # as both code is running on same pc
+    host = '192.168.0.46'  # as both code is running on same pc
     port = 5000  # socket server port number
 
     client_socket = socket.socket()  # instantiate
@@ -21,7 +22,8 @@ def client_program():
 
 if __name__ == '__main__':
     print()
+    client_program()
     try:
-        client_program()
+        pass
     except ConnectionRefusedError:
         print("The server doesn't appear to be online.\n")
