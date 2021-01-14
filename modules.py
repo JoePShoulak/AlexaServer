@@ -1,30 +1,24 @@
 import os
 from threading import Thread
+import sys
 
 from roku import Roku
 from helper import *
-from time import sleep
+from update import update
 
 
-def shutdown():
-    os.system('shutdown -s')
+def server_module(actions, socket):
+    print("\t\tReceived Server command.")
+    print("\t\t\tUpdating  server...")
 
-    press_virtual_button(1)
+    print("\t\t\t\tShutting down server...")
+    socket.close()
 
-    api = connect_to_smart_devices()
-    turn_off_device(api, "Monitor 2")
-    turn_off_device(api, "Monitor 1")
-
-
-def infinium_module(actions):
-    print("\t\tReceived Infinium command.")
-
-    if actions == ["shut", "down"]:
-        print("\t\t\tShutting down...")
-        Thread(target=shutdown).start()
+    update()
+    sys.exit()
 
 
-def roku_module(actions):
+def roku_module(actions, socket):
     print("\t\tReceived Roku command.")
     roku = Roku('192.168.0.170')
 
@@ -62,11 +56,11 @@ def roku_module(actions):
 r = Roku('')
 mod_funcs = {
     "Roku": roku_module,
-    "Infinium": infinium_module
+    "Server": server_module
 }
 
 
-def execute_data(data):
+def execute_data(data, socket):
     commands = data.split(" and ")
 
     for command in commands:
@@ -75,7 +69,7 @@ def execute_data(data):
         actions = list(map(lambda word: word.lower(), words[1:]))
 
         try:
-            mod_funcs[module.capitalize()](actions)
+            mod_funcs[module.capitalize()](actions, socket)
         except KeyError:
             print("\nError: Module %s does not exist:", module)
     print("\n\tAll tasks complete!\n")

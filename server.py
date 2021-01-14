@@ -22,7 +22,7 @@ def server_program():
         print("\tReceived data:", data)
         conn.send("success".encode())  # Tell them we got their command
 
-        execute_data(data)
+        execute_data(data, server_socket)
 
 
 if __name__ == '__main__':
