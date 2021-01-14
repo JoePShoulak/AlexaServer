@@ -21,7 +21,8 @@ def client_program():
 
 if __name__ == '__main__':
     print()
+    client_program()
     try:
-        client_program()
+        pass
     except ConnectionRefusedError:
         print("The server doesn't appear to be online.\n")
