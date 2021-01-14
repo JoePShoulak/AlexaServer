@@ -9,7 +9,7 @@ def client_program():
     client_socket = socket.socket()  # instantiate
     client_socket.connect((host, port))  # connect to the server
 
-    message = "infinium shut down"
+    message = "server update"
 
     client_socket.send(message.encode())  # send message
     data = client_socket.recv(8).decode()  # receive response
