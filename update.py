@@ -1,4 +1,5 @@
 import subprocess
+import platform
 from os import system
 
 
@@ -8,5 +9,8 @@ def update():
     output = str(out.strip())[2:-1]
     print("\t\t\t\t" + output)
     print("\t\t\t\tStarting server...")
-    system("server.py")
+    if platform.node() == "Infinium":
+        system("server.py")
+    else:
+        system("python3.8 server.py")
 
