@@ -26,7 +26,7 @@ def light_module(actions, socket):
     except:
         print("\t\t\t! API Error. Try again in 60 seconds.")
 
-    if logged_in:
+    if logged_in or actions[0] == "stop":
         den_main = get_devices_from_ids(den_main_ids, api)
 
         stop_loop = True
