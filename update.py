@@ -1,13 +1,12 @@
-import subprocess
 import platform
 from os import system
 
 
 def update():
-    proc = subprocess.Popen(["git", "pull"], stdout=subprocess.PIPE, shell=True)
-    (out, err) = proc.communicate()
-    output = str(out.strip())[2:-1]
-    print("\t\t\t\t" + output)
+    print()
+    system("git pull")
+    print()
+
     print("\t\t\t\tStarting server...")
     if platform.node() == "Infinium":
         system("server.py")
