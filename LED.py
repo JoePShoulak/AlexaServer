@@ -29,12 +29,6 @@ def fade_circle(device, radius, min_intensity, max_intensity, delay=0.1, backwar
             clear_device(device)
 
 
-def fade_out(device):
-    with canvas(device) as draw:
-        draw.line((0, 0, 7, 7), fill="white")
-        draw.line((7, 7, 0, 0), fill="white")
-
-
 def low_pulse(device):
     delay = 0.1
     fade_circle(device, 0, 0, 5, delay)

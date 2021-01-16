@@ -17,12 +17,12 @@ def roku_module(actions, socket):
         "right": roku.right
     }
 
-    if actions == "remote":
+    if actions[0] == "remote":
         buttons = actions[1:]
-        print("\t\t\t\tExecuting the following combo...")
+        print("\t\t\tExecuting the following combo...")
 
         for button in buttons:
-            print("\t\t\t\t\t" + button)
+            print("\t\t\t\t" + button)
             remote[button]()
 
     elif actions[0] == "resume":
@@ -34,7 +34,7 @@ def roku_module(actions, socket):
         try:
             button_combo(roku, combos["resume " + channel])
         except KeyError:
-            print("Error: No combo for %s yet. Does the channel exist?", channel)
+            print("\t\t\tError: No combo for %s yet. Does the channel exist?", channel)
 
 
 mod_funcs = {
