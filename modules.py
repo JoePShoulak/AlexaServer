@@ -14,7 +14,7 @@ def server_module(actions, socket):
     print("\t\t\t\tShutting down server...")
     socket.close()
 
-    update()
+    Thread(target=update).start()
     sys.exit()
 
 
