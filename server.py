@@ -14,7 +14,7 @@ def executing_animation(device):
 
 def server_program():
     # get the hostname
-    host = socket.gethostbyname(socket.gethostname())
+    host = ''
     port = 5000  # initiate port no above 1024
     server_socket = socket.socket()
 
@@ -27,25 +27,30 @@ def server_program():
     print("Server is online. Awaiting commands. ")
     global pause
     pause = False
-    Thread(target=listening_animation, args=(device,)).start()
+    Thread(target=listening_animation, args=(device,), daemon=True).start()
 
-    # configure how many client the server can listen simultaneously
-    while True:        
-        server_socket.listen(2)
-        conn, address = server_socket.accept()  # accept new connection
-        
-        print("Connection from: " + str(address))
-        data = conn.recv(1024).decode()
+    while True:
+        try:
+            server_socket.listen(2)
+            conn, address = server_socket.accept()  # accept new connection
+            
+            print("Connection from: " + str(address))
+            data = conn.recv(1024).decode()
 
-        pause = True
-        executing_animation(device)
-        pause = False
-        
-        print("\tReceived data:", data)
-        conn.send("success".encode())  # Tell them we got their command
+            pause = True
+            executing_animation(device)
+            pause = False
+            
+            print("\tReceived data:", data)
+            conn.send("success".encode())  # Tell them we got their command
 
-        execute_data(data, server_socket)
-
+            execute_data(data, server_socket)
+        except KeyboardInterrupt:
+            print("Shutting down server...")
+            pause = True
+            sleep(3)
+            exit()
+            
 
 if __name__ == '__main__':
     print()
