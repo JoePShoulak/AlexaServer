@@ -11,12 +11,12 @@ if pi:
 def listening_animation(device):
     while True:
         if not pause:
-            high_pulse(device, 0.1)
+            low_pulse(device)
 
 
 def executing_animation(device):
     for i in range(2):
-        high_pulse(device, 0.01)
+        high_pulse(device)
 
 
 def server_program():

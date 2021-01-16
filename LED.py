@@ -36,13 +36,17 @@ def fade_out(device):
 
 
 def low_pulse(device):
-    fade_circle(device, 0, 0, 7)
-    fade_circle(device, 1, 8, 15)
-    fade_circle(device, 1, 8, 15, backward=True)
-    fade_circle(device, 0, 0, 7, backward=True)
+    delay = 0.1
+    fade_circle(device, 0, 0, 5, delay)
+    fade_circle(device, 1, 6, 10, delay)
+    fade_circle(device, 2, 11, 15, delay)
+    fade_circle(device, 2, 11, 15, delay, backward=True)
+    fade_circle(device, 1, 6, 10, delay, backward=True)
+    fade_circle(device, 0, 0, 5, delay, backward=True)
 
 
-def high_pulse(device, delay):
+def high_pulse(device):
+    delay=0.01
     fade_circle(device, 0, 0, 3, delay)
     fade_circle(device, 1, 4, 7, delay)
     fade_circle(device, 2, 8, 11, delay)
