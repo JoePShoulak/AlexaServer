@@ -3,7 +3,7 @@ from os import system
 
 
 def update():
-    print()
+    print("\n\t\t\t\t", end="")
     system("git pull")
     print()
 
