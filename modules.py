@@ -35,8 +35,8 @@ def light_module(actions, socket):
         stop_loop = False
         sleep(1)
 
-        Thread(target=animations[actions[0]], args=(den_main,), daemon=True).start()
-
+        if actions[0] != "stop":
+            Thread(target=animations[actions[0]], args=(den_main,), daemon=True).start()
 
 
 def roku_module(actions, socket):
