@@ -11,7 +11,7 @@ def client_program():  # Ask on stack overflow why this works here but not on pi
     client_socket = socket.socket()  # instantiate
     client_socket.connect((host, port))  # connect to the server
 
-    message = "roku remote back"
+    message = "server update"
 
     client_socket.send(message.encode())  # send message
     data = client_socket.recv(8).decode()  # receive response
