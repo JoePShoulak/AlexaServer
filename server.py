@@ -64,4 +64,6 @@ if __name__ == '__main__':
     print()
     server_program()
 
+    # TODO: Finish filling in all the error detection and tie it into the animation
+
 

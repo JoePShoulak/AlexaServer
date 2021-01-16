@@ -1,5 +1,42 @@
 from roku import Roku
 from helper import *
+from lights import *
+
+
+def light_module(actions, socket):
+    print("\t\tReceived Light command.")
+
+    animations = {
+        "rainbow": rainbow,
+        "cross_faded": cross_faded,
+        "marquee": marquee,
+        "nebula": nebula
+    }
+
+    USERNAME = 'joepshoulak@me.com'  # username (email) from the android app
+    PASSWORD = 'Fibonacci1123!'  # password you set in your android app - choose a random one :)
+    COUNTRY_CODE = 'US'  # make sure you choose your country when registering in the app
+    api = TuyaApi()
+
+    logged_in = False
+
+    try:
+        api.init(USERNAME, PASSWORD, COUNTRY_CODE)
+        logged_in = True
+    except:
+        print("\t\t\t! API Error. Try again in 60 seconds.")
+
+    if logged_in:
+        den_main = get_devices_from_ids(den_main_ids, api)
+
+        stop_loop = True
+        sleep(1)
+        reset_lights(den_main)
+        stop_loop = False
+        sleep(1)
+
+        Thread(target=animations[actions[0]], args=(den_main,), daemon=True).start()
+
 
 
 def roku_module(actions, socket):
@@ -25,20 +62,11 @@ def roku_module(actions, socket):
             print("\t\t\t\t" + button)
             remote[button]()
 
-    elif actions[0] == "resume":
-        channel = official_names[" ".join(actions[1:])]
-        print("\t\t\tResuming " + channel + "...")
-
-        navigate_to_channel(roku, channel)
-
-        try:
-            button_combo(roku, combos["resume " + channel])
-        except KeyError:
-            print("\t\t\tError: No combo for %s yet. Does the channel exist?", channel)
-
 
 mod_funcs = {
     "Roku": roku_module,
+    "Lights": light_module,
+    "lights": light_module
 }
 
 
@@ -53,5 +81,6 @@ def execute_data(data, socket):
         try:
             mod_funcs[module.capitalize()](actions, socket)
         except KeyError:
-            print("\nError: Module %s does not exist:", module)
+            print("\t\t\t! Module or command does not exist.")
+
     print("\n\tAll tasks complete!\n")
