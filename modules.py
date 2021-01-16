@@ -1,21 +1,5 @@
-import os
-from threading import Thread
-import sys
-
 from roku import Roku
 from helper import *
-from update import update
-
-
-def server_module(actions, socket):
-    print("\t\tReceived Server command.")
-    print("\t\t\tUpdating  server...")
-
-    print("\t\t\t\tShutting down server...")
-    socket.close()
-
-    Thread(target=update).start()
-    sys.exit()
 
 
 def roku_module(actions, socket):
@@ -53,10 +37,8 @@ def roku_module(actions, socket):
             print("Error: No combo for %s yet. Does the channel exist?", channel)
 
 
-r = Roku('')
 mod_funcs = {
     "Roku": roku_module,
-    "Server": server_module
 }
 
 
